@@ -10,8 +10,8 @@
 
 package probono.view;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import probono.controller.TalentDonationProjectController;
 import probono.model.dto.Beneficiary;
@@ -50,22 +50,25 @@ public class StartView {
 
 		// 기부자, 수혜자가 매핑된 실제 진행되는 "재능 기부 프로젝트"
 		// 프로젝트명, 기부자, 수혜자, 재능기부종류, 시작일, 종료일, 재능기부 실제 내용
-		TalentDonationProject schweitzerProject = new TalentDonationProject("01슈바이처", donator1, beneficiary1,
-				schweitzer, "2024-11-31", "2024-12-03", "아토피 무상 치료");
-
-		TalentDonationProject audreyHepbunPorject = new TalentDonationProject("02오드리햅번", donator2, beneficiary2,
-				audreyHepbun, "2024-11-31", "2024-12-03", "예술가와의 만남");
-		TalentDonationProject motherTeresaProject = new TalentDonationProject("03마더테레사", donator3, beneficiary3,
-				motherTeresa, "2024-11-31", "2024-12-03", "독거 노인 식사 제공");
+		List<TalentDonationProject> projects = Arrays.asList(
+				new TalentDonationProject("01슈바이처", donator1, beneficiary1,
+						schweitzer, "2024-11-31", "2024-12-03", "아토피 무상 치료"),
+				new TalentDonationProject("02오드리햅번", donator2, beneficiary2,
+						audreyHepbun, "2024-11-31", "2024-12-03", "예술가와의 만남"),
+				new TalentDonationProject("03마더테레사", donator3, beneficiary3,
+						motherTeresa, "2024-11-31", "2024-12-03", "독거 노인 식사 제공"));
 
 		// 데이터 구성 후 서비스 로직 실행
 		TalentDonationProjectController controller = TalentDonationProjectController.getInstance();
 
 		System.out.println("*** 01. Project 생성 ***");
 		// 저장 시도시 이미 존재할 경우 예외 발생, 미 존재시 정상 저장 실행
-		controller.donationProjectInsert(schweitzerProject);
-		controller.donationProjectInsert(audreyHepbunPorject);
-		controller.donationProjectInsert(motherTeresaProject);
+		projects.forEach(controller::donationProjectInsert);
+		/*
+		 * controller.donationProjectInsert(schweitzerProject) ;
+		 * controller.donationProjectInsert(audreyHepbunPorject);
+		 * controller.donationProjectInsert(motherTeresaProject);
+		 */
 
 		System.out.println("\n*** 02. 모든 Project 검색 ***".toString());
 		controller.getDonationProjectsList();
