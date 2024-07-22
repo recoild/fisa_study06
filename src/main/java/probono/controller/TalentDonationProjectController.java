@@ -1,5 +1,7 @@
 package probono.controller;
 
+import java.util.Optional;
+
 import probono.model.dto.Beneficiary;
 import probono.model.dto.Donator;
 import probono.model.dto.TalentDonationProject;
@@ -14,22 +16,21 @@ public class TalentDonationProjectController {
 
 	private static TalentDonationProjectService service = TalentDonationProjectService.getInstance();
 
-	private TalentDonationProjectController() {}
+	private TalentDonationProjectController() {
+	}
 
 	public static TalentDonationProjectController getInstance() {
 		return instance;
 	}
-  
-	
+
 	/**
 	 * 모든 Project 검색
 	 * 
 	 * @return 모든 Project
 	 */
 	public void getDonationProjectsList() {
-		EndView.projectListView(service.getDonationProjectsList());	
+		EndView.projectListView(service.getDonationProjectsList());
 	}
-
 
 	/**
 	 * Project 이름으로 검색 - 객체된 Project 반환하기
@@ -41,28 +42,33 @@ public class TalentDonationProjectController {
 		EndView.projectView(service.getDonationProject(projectName));
 	}
 
-	
 	/**
 	 * 새로운 Project 추가
 	 * 
 	 * @param project 저장하고자 하는 새로운 프로젝트
 	 */
-	public void donationProjectInsert(TalentDonationProject project){
-	
+	public void donationProjectInsert(TalentDonationProject project) {
+
 		String projectName = project.getTalentDonationProjectName();
-		if(projectName != null && projectName.length() != 0) {
+		Optional<String> optProjectName = Optional.ofNullable(projectName);
+		optProjectName.ifPresent((s) -> {
+			if (s.length() == 0 || s.isEmpty()) {
+				FailView.failViewMessage("입력 부족, 재 확인 하세요~~");
+				return;
+			}
+
 			try {
-				
+
 				service.donationProjectInsert(project);
 				EndView.successMessage("새로운 프로젝트 등록 성공했습니다.");
-				
+
 			} catch (Exception e) {
-				FailView.failViewMessage(e.getMessage()); //실패인 경우 예외로 end user 서비스
+				FailView.failViewMessage(e.getMessage()); // 실패인 경우 예외로 end user 서비스
 				e.printStackTrace();
 			}
-		}else {
-			FailView.failViewMessage("입력 부족, 재 확인 하세요~~");
-		}
+
+		});
+
 	}
 
 	/**
@@ -72,7 +78,7 @@ public class TalentDonationProjectController {
 	 * @param people      기부자
 	 */
 	public void donationProjectUpdate(String projectName, Donator people) {
-		
+
 		try {
 			service.donationProjectUpdate(projectName, people);
 		} catch (Exception e) {
