@@ -48,27 +48,26 @@ public class TalentDonationProjectController {
 	 * @param project 저장하고자 하는 새로운 프로젝트
 	 */
 	public void donationProjectInsert(TalentDonationProject project) {
-
 		String projectName = project.getTalentDonationProjectName();
-		Optional<String> optProjectName = Optional.ofNullable(projectName);
-		optProjectName.ifPresent((s) -> {
-			if (s.isEmpty()) {
-				FailView.failViewMessage("입력 부족, 재 확인 하세요~~");
-				return;
-			}
+		projectName = "";
+		Optional<String> opt = Optional.ofNullable(projectName);
+		opt.ifPresentOrElse(
+				n -> {
+					if (n.isEmpty()) {
+						FailView.failViewMessage("입력 부족, 재 확인 하세요~~");
+						return;
+					}
+					try {
 
-			try {
+						service.donationProjectInsert(project);
+						EndView.successMessage("새로운 프로젝트 등록 성공했습니다.");
 
-				service.donationProjectInsert(project);
-				EndView.successMessage("새로운 프로젝트 등록 성공했습니다.");
-
-			} catch (Exception e) {
-				FailView.failViewMessage(e.getMessage()); // 실패인 경우 예외로 end user 서비스
-				e.printStackTrace();
-			}
-
-		});
-
+					} catch (Exception e) {
+						FailView.failViewMessage(e.getMessage()); // 실패인 경우 예외로 end user 서비스
+						e.printStackTrace();
+					}
+				},
+				() -> FailView.failViewMessage("입력 부족, 재 확인 하세요~~"));
 	}
 
 	/**
