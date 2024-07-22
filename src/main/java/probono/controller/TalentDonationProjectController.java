@@ -52,7 +52,7 @@ public class TalentDonationProjectController {
 		String projectName = project.getTalentDonationProjectName();
 		Optional<String> optProjectName = Optional.ofNullable(projectName);
 		optProjectName.ifPresent((s) -> {
-			if (s.length() == 0 || s.isEmpty()) {
+			if (s.isEmpty()) {
 				FailView.failViewMessage("입력 부족, 재 확인 하세요~~");
 				return;
 			}
