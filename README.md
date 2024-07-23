@@ -1,3 +1,5 @@
+# 리팩토링 수행
+
 ## StartView 반복 코드 수정
 forEach 사용
 
