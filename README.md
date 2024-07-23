@@ -1,4 +1,13 @@
-# 리팩토링 수행
+# :rocket: 재능기부 프로젝트 리팩토링 수행
+기존의 java 프로젝트를 Stream API & Lamda 식을 적용하여 리팩토링 진행
+
+
+## :metal: 팀원
+노솔리 : vivace8520vi@naver.com   
+이연희 : https://github.com/LeeYeonhee-00   
+안재형 : https://github.com/recoild   
+조성현 : ?   
+
 
 ## StartView 반복 코드 수정
 forEach 사용
