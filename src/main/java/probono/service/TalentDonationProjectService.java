@@ -15,18 +15,18 @@ import probono.model.dto.Beneficiary;
 import probono.model.dto.Donator;
 import probono.model.dto.TalentDonationProject;
 
-
 public class TalentDonationProjectService {
 
 	// singleton design pattern
 	private static TalentDonationProjectService instance = new TalentDonationProjectService();
 
-	/**   
+	/**
 	 * 진행중인 Project를 저장
 	 */
 	private ArrayList<TalentDonationProject> donationProjectList = new ArrayList<TalentDonationProject>();
 
-	private TalentDonationProjectService() {}
+	private TalentDonationProjectService() {
+	}
 
 	public static TalentDonationProjectService getInstance() {
 		return instance;
@@ -49,10 +49,10 @@ public class TalentDonationProjectService {
 	 * @return TalentDonationProject 검색된 프로젝트
 	 */
 	public TalentDonationProject getDonationProject(String projectName) {
-		
+
 		for (TalentDonationProject project : donationProjectList) {
 			if (project != null && project.getTalentDonationProjectName().equals(projectName)) {
-				return project; //메소드 자체의 종료
+				return project; // 메소드 자체의 종료
 			}
 		}
 
@@ -65,13 +65,14 @@ public class TalentDonationProjectService {
 	 * 
 	 * @param project 저장하고자 하는 새로운 프로젝트
 	 */
-	
-	/* Controller의 메소드 
-	 * 	public void donationProjectInsert(TalentDonationProject project){}
-	 * */
+
+	/*
+	 * Controller의 메소드
+	 * public void donationProjectInsert(TalentDonationProject project){}
+	 */
 	public void donationProjectInsert(TalentDonationProject project)
 			throws Exception {
-		
+
 		TalentDonationProject p = getDonationProject(project.getTalentDonationProjectName());
 
 		if (p != null) {
@@ -79,7 +80,7 @@ public class TalentDonationProjectService {
 		}
 
 		donationProjectList.add(project);
-		
+
 	}
 
 	/**
@@ -115,17 +116,11 @@ public class TalentDonationProjectService {
 	 * @param projectName 프로젝트 이름
 	 * @param people      수혜자
 	 */
+	// 서비스단
 	public void beneficiaryProjectUpdate(String projectName, Beneficiary people) {
-
-		for (TalentDonationProject project : donationProjectList) {
-
-			if (project != null && project.getTalentDonationProjectName().equals(projectName)) {
-
-				project.setProjectBeneficiary(people);
-
-				break;
-			}
-		}
+		donationProjectList.stream()
+				.filter(p -> p != null && p.getTalentDonationProjectName().equals(projectName))
+				.forEach(p -> p.setProjectBeneficiary(people));
 
 	}
 
