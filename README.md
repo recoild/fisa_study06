@@ -3,7 +3,7 @@
 ## StartView 반복 코드 수정
 forEach 사용
 
-```
+```java
 // 데이터 구성 후 서비스 로직 실행
 projects.forEach(controller::donationProjectInsert);
 /*
@@ -16,7 +16,7 @@ projects.forEach(controller::donationProjectInsert);
 ## Controller - Insert 코드 수정
 Optional 사용 예외 처리
 
-```
+```java
 public void donationProjectInsert(TalentDonationProject project) {
 		String projectName = project.getTalentDonationProjectName();
 		projectName = "";
@@ -42,7 +42,7 @@ public void donationProjectInsert(TalentDonationProject project) {
 ```
 
 ## Service - Update 수정
-```
+```java
 public void beneficiaryProjectUpdate(String projectName, Beneficiary people) {
 		donationProjectList.stream()
 				.filter(p -> p != null && p.getTalentDonationProjectName().equals(projectName))
