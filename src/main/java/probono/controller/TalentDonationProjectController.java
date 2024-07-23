@@ -49,7 +49,7 @@ public class TalentDonationProjectController {
 	 */
 	public void donationProjectInsert(TalentDonationProject project) {
 		String projectName = project.getTalentDonationProjectName();
-		projectName = "";
+
 		Optional<String> opt = Optional.ofNullable(projectName);
 		opt.ifPresentOrElse(
 				n -> {
